@@ -68,19 +68,19 @@ Shader "MyShaders/Toon" {
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
                 o.viewDir = WorldSpaceViewDir(v.pos);
                 //UNITY_TRANSFER_FOG(o,o.vertex);
-                TRANSFER_SHADOW(o)
+                //TRANSFER_SHADOW(o)
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target {
                 // sample the texture
                 fixed4 texSample = tex2D(_MainTex, i.uv);
-                float shadow = SHADOW_ATTENUATION(i);
+                //float shadow = SHADOW_ATTENUATION(i);
 
                 //Diffuse light
                 float3 normal = normalize(i.worldNormal);
                 float nDotL = max(0, dot(_WorldSpaceLightPos0, normal));
-                float diffuseLightIntensity = smoothstep(0, 0.01, nDotL * shadow);
+                float diffuseLightIntensity = smoothstep(0, 0.01, nDotL /** shadow*/);
                 float diffuseLight = diffuseLightIntensity * _LightColor0;
 
                 //Specualr Reflections

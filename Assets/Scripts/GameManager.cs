@@ -6,13 +6,19 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public int potsInScene;
-    public bool pause;
-    private bool check;
+    [SerializeField] GameObject joystick;
+    [SerializeField] GameObject fireButton;
+    [HideInInspector] public int potsInScene;
+    [HideInInspector] public bool pause;
+    [HideInInspector] private bool check;
     
     private void Awake() {
         if(instance == null)
             instance = this;
+    #if UNITY_IOS || UNITY_ANDROID
+        joystick.SetActive(true);
+        fireButton.SetActive(true);
+    #endif
     }
 
     private void Start() {

@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
     [SerializeField] Transform shotPoint;
     [SerializeField] float moveSpeed = 10;
     [SerializeField] float rotationSpeed = 10;
+    [SerializeField] Joystick joystick;
+    [SerializeField] [Range(0, 1)] float moveThreshold = 0.5f;
+
     private CharacterController cc;
     private float horizontalInput, verticalInput;
 
@@ -17,15 +20,30 @@ public class Player : MonoBehaviour
 
     private void Update() {
         if(!GameManager.instance.pause) {
+        #if UNITY_IOS || UNITY_ANDROID
+            if(joystick.Horizontal > moveThreshold)
+                horizontalInput = moveSpeed * Time.deltaTime;
+            else if(joystick.Horizontal < -moveThreshold)
+                horizontalInput = -moveSpeed * Time.deltaTime;
+            else
+                horizontalInput = 0;
+
+            if(joystick.Vertical > moveThreshold)
+                verticalInput = moveSpeed * Time.deltaTime;
+            else if(joystick.Vertical < -moveThreshold)
+                verticalInput = -moveSpeed * Time.deltaTime;
+            else
+                verticalInput = 0;
+        #else
             horizontalInput = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
             verticalInput = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
 
             if(Input.GetKeyDown(KeyCode.Space))
                 Shoot();
+        #endif
         } else {
             horizontalInput = verticalInput = 0;
         }
-        
 
         Movement();
     }

@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
     }
 
     public void Shoot() {
+        GameManager.instance.PlayerBulletSE();
         ObjectPooler.instance.SpawnPoolObj("Bullet", shotPoint.position, mesh.rotation);
     }
 

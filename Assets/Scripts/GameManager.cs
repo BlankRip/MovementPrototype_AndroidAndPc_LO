@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [SerializeField] GameObject joystick;
     [SerializeField] GameObject fireButton;
+    [SerializeField] AudioSource seSource;
+    [SerializeField] AudioClip bulletSE, breakSE;
     [HideInInspector] public int potsInScene;
     [HideInInspector] public bool pause;
     [HideInInspector] private bool check;
@@ -32,6 +34,14 @@ public class GameManager : MonoBehaviour
             if(potsInScene <= 0)
                 SceneManager.LoadScene(2);
         }
+    }
+
+    public void PlayerBulletSE() {
+        seSource.PlayOneShot(bulletSE);
+    }
+
+    public void PlayBreakSE() {
+        seSource.PlayOneShot(breakSE);
     }
 
     private IEnumerator StartCheckAfter() {

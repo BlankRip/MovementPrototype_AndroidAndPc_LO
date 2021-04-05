@@ -20,8 +20,10 @@ public class Pot : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) {
         if(other.gameObject.CompareTag("Bullet")) {
-            if(myMat == other.gameObject.GetComponent<Bullet>().myMat)
+            if(myMat == other.gameObject.GetComponent<Bullet>().myMat) {
+                GameManager.instance.PlayBreakSE();
                 Destroy(this.gameObject);
+            }
         }
     }
 

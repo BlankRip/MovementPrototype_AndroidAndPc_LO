@@ -21,7 +21,6 @@ public class Bullet : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision other) {
-        Debug.Log("ent");
         this.gameObject.SetActive(false);
     }
 }
